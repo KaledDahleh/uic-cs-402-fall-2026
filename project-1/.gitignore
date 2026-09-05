@@ -19,3 +19,5 @@ autograder/startup/podman_run_ec.sh
 !autograder/tests/extra/Alex_Block_project1.h
 !autograder/tests/extra/testing.*
 !testing.*
+!Kaled_Dahleh_project1.cpp
+!Kaled_Dahleh_project1.h

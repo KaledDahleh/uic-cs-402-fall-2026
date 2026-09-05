@@ -4,8 +4,8 @@
 #include <type_traits>
 
 
-#ifndef FIRSTNAME_LASTNAME_PROJECT1
-#define FIRSTNAME_LASTNAME_PROJECT1
+#ifndef KALED_DAHLEH_PROJECT1
+#define KALED_DAHLEH_PROJECT1
 
 using namespace std;
 

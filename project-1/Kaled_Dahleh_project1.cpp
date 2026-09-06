@@ -340,6 +340,7 @@ void radix_sort(vector<T> &list, unsigned int base, bool descending) {
 int main() {
     /**** STUDENT CODE HERE ****/ 
 
+    // BUBBLE SORT ------------------------------------------------------------------------------
 
     vector<int> bubble_list1 = {482, 917, 103, 650, 274, 839};
     bubble_sort(bubble_list1, false);
@@ -351,6 +352,8 @@ int main() {
         print_list(bubble_list1);
     }
 
+    // SELECTION SORT ------------------------------------------------------------------------------
+
     vector<int> selection_list1 = {482, 917, 103, 650, 274, 839};
     selection_sort(selection_list1, false);
     bool selection_test_1_success = (selection_list1 == vector<int>{103, 274, 482, 650, 839, 917});
@@ -361,6 +364,7 @@ int main() {
         print_list(selection_list1);
     }
 
+    // INSERTION SORT ------------------------------------------------------------------------------
 
     vector<int> insertion_list1 = {482, 917, 103, 650, 274, 839};
     insertion_sort(insertion_list1, false);
@@ -372,6 +376,65 @@ int main() {
         print_list(insertion_list1);
     }
 
+    // QUICK SORT ------------------------------------------------------------------------------
+
+    vector<int> quick_list1 = {482, 917, 103, 650, 274, 839};
+    quicksort(quick_list1, false);
+    bool quick_test_1_success = (quick_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (quick_test_1_success) {
+        cout << "quick test 1 is a success" << endl;
+    } else {
+        cout << "quick test 1 is a failure, got: ";
+        print_list(quick_list1);
+    }
+
+    // MERGE SORT ------------------------------------------------------------------------------
+
+    vector<int> merge_list1 = {482, 917, 103, 650, 274, 839};
+    merge_sort(merge_list1, false);
+    bool merge_test_1_success = (merge_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (merge_test_1_success) {
+        cout << "merge test 1 is a success" << endl;
+    } else {
+        cout << "merge test 1 is a failure, got: ";
+        print_list(merge_list1);
+    }
+
+    // HYBRID SORT ------------------------------------------------------------------------------
+
+    vector<int> hybrid_list1 = {482, 917, 103, 650, 274, 839};
+    my_hybrid_sort(hybrid_list1, false);
+    bool hybrid_test_1_success = (hybrid_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (hybrid_test_1_success) {
+        cout << "hybrid test 1 is a success" << endl;
+    } else {
+        cout << "hybrid test 1 is a failure, got: ";
+        print_list(hybrid_list1);
+    }
+
+    // BINARY RADIX SORT ------------------------------------------------------------------------------
+
+    vector<int> binary_radix_list1 = {482, 917, 103, 650, 274, 839};
+    binary_radix_sort(binary_radix_list1, false);
+    bool binary_radix_test_1_success = (binary_radix_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (binary_radix_test_1_success) {
+        cout << "binary radix test 1 is a success" << endl;
+    } else {
+        cout << "binary radix test 1 is a failure, got: ";
+        print_list(binary_radix_list1);
+    }
+
+    // RADIX SORT ------------------------------------------------------------------------------
+
+    vector<int> radix_list1 = {482, 917, 103, 650, 274, 839};
+    radix_sort(radix_list1, 10, false);
+    bool radix_test_1_success = (radix_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (radix_test_1_success) {
+        cout << "radix test 1 is a success" << endl;
+    } else {
+        cout << "radix test 1 is a failure, got: ";
+        print_list(radix_list1);
+    }
 
     /**** END STUDENT CODE ****/
 

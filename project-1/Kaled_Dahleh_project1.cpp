@@ -66,7 +66,18 @@ const std::string who_am_i() {
  * */
 template<typename T>
 void bubble_sort(vector<T> &list, bool descending) {
-    // Your code here!
+    int swaps = 1;
+    while (swaps > 0) {
+        swaps = 0;
+        for (int i = 0; i < list.size() - 1; i++) {
+            if ((list[i] > list[i + 1] && descending == false) || (list[i] < list[i + 1] && descending == true)) {
+                T temp = list[i];
+                list[i] = list[i + 1];
+                list[i + 1] = temp;
+                swaps += 1;
+            }
+        }
+    }
 }
 
 
@@ -100,7 +111,22 @@ void bubble_sort(vector<T> &list, bool descending) {
  * */
 template<typename T>
 void selection_sort(vector<T> &list, bool descending) {
-    // Your code here!
+    for (int i = 0; i < list.size() - 1; i++) { // starting index
+        T best = list[i]; // smallest or largest depending on 'descending'
+        int best_index = i;
+        for (int j = i + 1; j < list.size(); j++) {
+            if ((list[j] < best && descending == false) || (list[j] > best && descending == true)) {
+                best = list[j];
+                best_index = j;
+            }
+        }
+
+        if (best_index != i){ // need a swap
+            T temp = list[i];
+            list[i] = list[best_index];
+            list[best_index] = temp;
+        }
+    }
 }
 
 
@@ -297,6 +323,29 @@ void radix_sort(vector<T> &list, unsigned int base, bool descending) {
 
 int main() {
     /**** STUDENT CODE HERE ****/ 
+
+
+    vector<int> bubble_list1 = {482, 917, 103, 650, 274, 839};
+    bubble_sort(bubble_list1, false);
+    bool test_1_success = (bubble_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (test_1_success) {
+        cout << "bubble test 1 is a success" << endl;
+    } else {
+        cout << "bubble test 1 is a failure, got: ";
+        print_list(bubble_list1);
+    }
+
+    vector<int> selection_list1 = {482, 917, 103, 650, 274, 839};
+    selection_sort(selection_list1, false);
+    bool test_2_success = (selection_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (test_2_success) {
+        cout << "selection test 1 is a success" << endl;
+    } else {
+        cout << "selection test 1 is a failure, got: ";
+        print_list(selection_list1);
+    }
+
+
 
 
 

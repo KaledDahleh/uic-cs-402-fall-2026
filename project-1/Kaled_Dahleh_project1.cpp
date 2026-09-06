@@ -209,7 +209,35 @@ void insertion_sort(vector<T> &list, bool descending) {
  * */
 template<typename T>
 void quicksort(vector<T> &list, bool descending) {
-    // Your code here!
+
+    if (list.size() <= 1) {
+        return;
+    }
+
+    int pivot = get_rand_index(list.size());
+
+    vector<T> smaller;
+    vector<T> greater;
+    for (int i = 0; i < list.size(); i++) {
+        if (list[i] < list[pivot]) {
+            smaller.push_back(list[i]);
+        }
+        else if (i != pivot) {
+            greater.push_back(list[i]);
+        }
+    }
+    quicksort(smaller, descending);
+    quicksort(greater, descending);
+    if (descending) {
+        greater.push_back(list[pivot]);
+        greater.insert(greater.end(), smaller.begin(), smaller.end());
+        list = greater;
+    }
+    else {
+        smaller.push_back(list[pivot]);
+        smaller.insert(smaller.end(), greater.begin(), greater.end());
+        list = smaller;
+    }
 }
 
 

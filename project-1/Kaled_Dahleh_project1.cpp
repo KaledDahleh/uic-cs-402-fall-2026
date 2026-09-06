@@ -163,7 +163,23 @@ void selection_sort(vector<T> &list, bool descending) {
 //void insertion_sort(vector<T> &list, bool descending = false);
 template<typename T>
 void insertion_sort(vector<T> &list, bool descending) {
-    // Your code here!
+    if (list.size() <= 1) {
+        return;
+    }
+    for (int i = 1; i < list.size(); i++) {
+        int pos = i;
+        while ((pos - 1 >= 0) && (
+            ((list[pos-1] > list[pos]) && descending == false) ||
+            ((list[pos-1] < list[pos]) && descending == true) ) 
+        ) {
+            // need a swap
+            T temp = list[pos];
+            list[pos] = list[pos - 1];
+            list[pos - 1] = temp;
+
+            pos -= 1;
+        }
+    }
 }
 
 
@@ -327,8 +343,8 @@ int main() {
 
     vector<int> bubble_list1 = {482, 917, 103, 650, 274, 839};
     bubble_sort(bubble_list1, false);
-    bool test_1_success = (bubble_list1 == vector<int>{103, 274, 482, 650, 839, 917});
-    if (test_1_success) {
+    bool bubble_test_1_success = (bubble_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (bubble_test_1_success) {
         cout << "bubble test 1 is a success" << endl;
     } else {
         cout << "bubble test 1 is a failure, got: ";
@@ -337,8 +353,8 @@ int main() {
 
     vector<int> selection_list1 = {482, 917, 103, 650, 274, 839};
     selection_sort(selection_list1, false);
-    bool test_2_success = (selection_list1 == vector<int>{103, 274, 482, 650, 839, 917});
-    if (test_2_success) {
+    bool selection_test_1_success = (selection_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (selection_test_1_success) {
         cout << "selection test 1 is a success" << endl;
     } else {
         cout << "selection test 1 is a failure, got: ";
@@ -346,7 +362,15 @@ int main() {
     }
 
 
-
+    vector<int> insertion_list1 = {482, 917, 103, 650, 274, 839};
+    insertion_sort(insertion_list1, false);
+    bool insertion_test_1_success = (insertion_list1 == vector<int>{103, 274, 482, 650, 839, 917});
+    if (insertion_test_1_success) {
+        cout << "insertion test 1 is a success" << endl;
+    } else {
+        cout << "insertion test 1 is a failure, got: ";
+        print_list(insertion_list1);
+    }
 
 
     /**** END STUDENT CODE ****/

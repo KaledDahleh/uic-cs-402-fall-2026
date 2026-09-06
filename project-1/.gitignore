@@ -1,3 +1,4 @@
+test
 *.b
 .clangd
 autograder/results/*.txt

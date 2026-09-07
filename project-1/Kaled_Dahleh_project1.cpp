@@ -266,7 +266,62 @@ void quicksort(vector<T> &list, bool descending) {
  * */
 template<typename T>
 void merge_sort(vector<T> &list, bool decending) {
-    // Your code here!
+    if (list.size() <= 1) {
+        return;
+    }
+    int mid_point = list.size() / 2;
+    
+    vector<T> left;
+    vector<T> right;
+    for (int i = 0; i < list.size(); i++) {
+        if (i < list.size() / 2) {
+            left.push_back(list[i]);
+        }
+        else {
+            right.push_back(list[i]);
+        }
+    }
+    merge_sort(left, decending);
+    merge_sort(right, decending);
+    
+    // intertwine two sorted halves
+    int left_idx = 0;
+    int right_idx = 0;
+    vector<T> res;
+
+    while ((left_idx < left.size()) || (right_idx < right.size())){
+        if (left_idx < left.size() && right_idx < right.size()) {
+            if (left[left_idx] < right[right_idx]) {
+                if (decending) {
+                    res.push_back(right[right_idx]);
+                    right_idx++;
+                }
+                else {
+                    res.push_back(left[left_idx]);
+                    left_idx++;
+                }
+            }
+            else {
+                if (decending) {
+                    res.push_back(left[left_idx]);
+                    left_idx++;
+                }
+                else {
+                    res.push_back(right[right_idx]);
+                    right_idx++;
+                }
+            }
+        }
+        else if (left_idx < left.size()) {
+            res.push_back(left[left_idx]);
+            left_idx++;
+        }
+        else {
+            res.push_back(right[right_idx]);
+            right_idx++;
+        }
+    }
+    list = res;
 }
 
 

@@ -468,7 +468,69 @@ void binary_radix_sort(vector<T> &list, bool descending) {
  */
 template<Integral T>
 void radix_sort(vector<T> &list, unsigned int base, bool descending) {
-    // Your code here!
+
+    if (list.size() <= 1) {
+        return;
+    }
+
+
+    vector<T> negatives;
+    vector<T> positives;
+    for (T num : list) { // splut list by sign
+        if (num < 0) {
+            negatives.push_back(-num);
+        }
+        else {
+            positives.push_back(num);
+        }
+    }
+
+    // sort by size, flip back, then combine
+    if (!negatives.empty()) {
+        radix_sort(negatives, base, false);
+        reverse(negatives.begin(), negatives.end());
+        for (int i = 0; i < negatives.size(); i++) {
+            negatives[i] = -negatives[i];
+        }
+        radix_sort(positives, base, false);
+        negatives.insert(negatives.end(), positives.begin(), positives.end());
+        list = negatives;
+        if (descending) {
+            reverse(list.begin(), list.end());
+        }
+        return;
+    }
+
+
+    // get max num digits
+    T largest_element = *max_element(list.begin(), list.end());
+    string T_as_string = to_string(largest_element);
+    int length_of_longest = T_as_string.size();
+
+    vector<T> order_so_far = list;
+
+    for (int digit_to_extract = 0; digit_to_extract < length_of_longest; digit_to_extract++){ // for each digit
+
+        vector<vector<T>> frequencies(base);
+        for (int i = 0; i < order_so_far.size(); i++) { // counting sort
+
+            // get digit
+            int extracted_digit = (order_so_far[i] / (int)pow(base, digit_to_extract)) % base;
+            frequencies[extracted_digit].push_back(order_so_far[i]);
+
+        }
+
+        order_so_far.clear();
+        for (vector<T> freq : frequencies) {
+            for (T num : freq) {
+                order_so_far.push_back(num);
+            }
+        }
+    }
+    list = order_so_far;
+    if (descending) {
+        reverse(list.begin(), list.end());
+    }
 }
 
 

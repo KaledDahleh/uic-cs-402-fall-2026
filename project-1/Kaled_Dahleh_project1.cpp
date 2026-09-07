@@ -66,6 +66,9 @@ const std::string who_am_i() {
  * */
 template<typename T>
 void bubble_sort(vector<T> &list, bool descending) {
+    if (list.size() <= 1) {
+        return;
+    }
     int swaps = 1;
     while (swaps > 0) {
         swaps = 0;
@@ -111,6 +114,9 @@ void bubble_sort(vector<T> &list, bool descending) {
  * */
 template<typename T>
 void selection_sort(vector<T> &list, bool descending) {
+    if (list.size() <= 1) {
+        return;
+    }
     for (int i = 0; i < list.size() - 1; i++) { // starting index
         T best = list[i]; // smallest or largest depending on 'descending'
         int best_index = i;
@@ -553,6 +559,66 @@ int main() {
         print_list(bubble_list1);
     }
 
+    vector<int> bubble_list2 = {};
+    bubble_sort(bubble_list2, false);
+    bool bubble_test_2_success = (bubble_list2 == vector<int>{});
+    if (bubble_test_2_success) {
+        cout << "bubble test 2 (empty) is a success" << endl;
+    } else {
+        cout << "bubble test 2 (empty) is a failure, got: ";
+        print_list(bubble_list2);
+    }
+
+    vector<int> bubble_list3 = {42};
+    bubble_sort(bubble_list3, false);
+    bool bubble_test_3_success = (bubble_list3 == vector<int>{42});
+    if (bubble_test_3_success) {
+        cout << "bubble test 3 (single) is a success" << endl;
+    } else {
+        cout << "bubble test 3 (single) is a failure, got: ";
+        print_list(bubble_list3);
+    }
+
+    vector<int> bubble_list4 = {8, 3, 15, 1, 9, 12, 5, 14, 2, 11, 4, 13, 7, 10, 6};
+    bubble_sort(bubble_list4, false);
+    bool bubble_test_4_success = (bubble_list4 == vector<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    if (bubble_test_4_success) {
+        cout << "bubble test 4 (many) is a success" << endl;
+    } else {
+        cout << "bubble test 4 (many) is a failure, got: ";
+        print_list(bubble_list4);
+    }
+
+    vector<int> bubble_list5 = {-8,-3,-15,-1,-9,-12,-5,-14,-2,-11,-4,-13,-7,-10,-6};
+    bubble_sort(bubble_list5, false);
+    bool bubble_test_5_success = (bubble_list5 == vector<int>{-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1});
+    if (bubble_test_5_success) {
+        cout << "bubble test 5 (negatives only) is a success" << endl;
+    } else {
+        cout << "bubble test 5 (negatives only) is a failure, got: ";
+        print_list(bubble_list5);
+    }
+
+    vector<int> bubble_list6 = {-5, 3, -19, 0, 17, -3, 9, -11, 13};
+    bubble_sort(bubble_list6, false);
+    bool bubble_test_6_success = (bubble_list6 == vector<int>{-19,-11,-5,-3,0,3,9,13,17});
+    if (bubble_test_6_success) {
+        cout << "bubble test 6 (mixed) is a success" << endl;
+    } else {
+        cout << "bubble test 6 (mixed) is a failure, got: ";
+        print_list(bubble_list6);
+    }
+
+    vector<int> bubble_list7 = {5, 100, 3, 42, 1, 999, 17};
+    bubble_sort(bubble_list7, false);
+    bool bubble_test_7_success = (bubble_list7 == vector<int>{1,3,5,17,42,100,999});
+    if (bubble_test_7_success) {
+        cout << "bubble test 7 (positives only) is a success" << endl;
+    } else {
+        cout << "bubble test 7 (positives only) is a failure, got: ";
+        print_list(bubble_list7);
+    }
+
     // SELECTION SORT ------------------------------------------------------------------------------
 
     vector<int> selection_list1 = {482, 917, 103, 650, 274, 839};
@@ -563,6 +629,66 @@ int main() {
     } else {
         cout << "selection test 1 is a failure, got: ";
         print_list(selection_list1);
+    }
+
+    vector<int> selection_list2 = {};
+    selection_sort(selection_list2, false);
+    bool selection_test_2_success = (selection_list2 == vector<int>{});
+    if (selection_test_2_success) {
+        cout << "selection test 2 (empty) is a success" << endl;
+    } else {
+        cout << "selection test 2 (empty) is a failure, got: ";
+        print_list(selection_list2);
+    }
+
+    vector<int> selection_list3 = {42};
+    selection_sort(selection_list3, false);
+    bool selection_test_3_success = (selection_list3 == vector<int>{42});
+    if (selection_test_3_success) {
+        cout << "selection test 3 (single) is a success" << endl;
+    } else {
+        cout << "selection test 3 (single) is a failure, got: ";
+        print_list(selection_list3);
+    }
+
+    vector<int> selection_list4 = {8, 3, 15, 1, 9, 12, 5, 14, 2, 11, 4, 13, 7, 10, 6};
+    selection_sort(selection_list4, false);
+    bool selection_test_4_success = (selection_list4 == vector<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    if (selection_test_4_success) {
+        cout << "selection test 4 (many) is a success" << endl;
+    } else {
+        cout << "selection test 4 (many) is a failure, got: ";
+        print_list(selection_list4);
+    }
+
+    vector<int> selection_list5 = {-8,-3,-15,-1,-9,-12,-5,-14,-2,-11,-4,-13,-7,-10,-6};
+    selection_sort(selection_list5, false);
+    bool selection_test_5_success = (selection_list5 == vector<int>{-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1});
+    if (selection_test_5_success) {
+        cout << "selection test 5 (negatives only) is a success" << endl;
+    } else {
+        cout << "selection test 5 (negatives only) is a failure, got: ";
+        print_list(selection_list5);
+    }
+
+    vector<int> selection_list6 = {-5, 3, -19, 0, 17, -3, 9, -11, 13};
+    selection_sort(selection_list6, false);
+    bool selection_test_6_success = (selection_list6 == vector<int>{-19,-11,-5,-3,0,3,9,13,17});
+    if (selection_test_6_success) {
+        cout << "selection test 6 (mixed) is a success" << endl;
+    } else {
+        cout << "selection test 6 (mixed) is a failure, got: ";
+        print_list(selection_list6);
+    }
+
+    vector<int> selection_list7 = {5, 100, 3, 42, 1, 999, 17};
+    selection_sort(selection_list7, false);
+    bool selection_test_7_success = (selection_list7 == vector<int>{1,3,5,17,42,100,999});
+    if (selection_test_7_success) {
+        cout << "selection test 7 (positives only) is a success" << endl;
+    } else {
+        cout << "selection test 7 (positives only) is a failure, got: ";
+        print_list(selection_list7);
     }
 
     // INSERTION SORT ------------------------------------------------------------------------------
@@ -577,6 +703,66 @@ int main() {
         print_list(insertion_list1);
     }
 
+    vector<int> insertion_list2 = {};
+    insertion_sort(insertion_list2, false);
+    bool insertion_test_2_success = (insertion_list2 == vector<int>{});
+    if (insertion_test_2_success) {
+        cout << "insertion test 2 (empty) is a success" << endl;
+    } else {
+        cout << "insertion test 2 (empty) is a failure, got: ";
+        print_list(insertion_list2);
+    }
+
+    vector<int> insertion_list3 = {42};
+    insertion_sort(insertion_list3, false);
+    bool insertion_test_3_success = (insertion_list3 == vector<int>{42});
+    if (insertion_test_3_success) {
+        cout << "insertion test 3 (single) is a success" << endl;
+    } else {
+        cout << "insertion test 3 (single) is a failure, got: ";
+        print_list(insertion_list3);
+    }
+
+    vector<int> insertion_list4 = {8, 3, 15, 1, 9, 12, 5, 14, 2, 11, 4, 13, 7, 10, 6};
+    insertion_sort(insertion_list4, false);
+    bool insertion_test_4_success = (insertion_list4 == vector<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    if (insertion_test_4_success) {
+        cout << "insertion test 4 (many) is a success" << endl;
+    } else {
+        cout << "insertion test 4 (many) is a failure, got: ";
+        print_list(insertion_list4);
+    }
+
+    vector<int> insertion_list5 = {-8,-3,-15,-1,-9,-12,-5,-14,-2,-11,-4,-13,-7,-10,-6};
+    insertion_sort(insertion_list5, false);
+    bool insertion_test_5_success = (insertion_list5 == vector<int>{-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1});
+    if (insertion_test_5_success) {
+        cout << "insertion test 5 (negatives only) is a success" << endl;
+    } else {
+        cout << "insertion test 5 (negatives only) is a failure, got: ";
+        print_list(insertion_list5);
+    }
+
+    vector<int> insertion_list6 = {-5, 3, -19, 0, 17, -3, 9, -11, 13};
+    insertion_sort(insertion_list6, false);
+    bool insertion_test_6_success = (insertion_list6 == vector<int>{-19,-11,-5,-3,0,3,9,13,17});
+    if (insertion_test_6_success) {
+        cout << "insertion test 6 (mixed) is a success" << endl;
+    } else {
+        cout << "insertion test 6 (mixed) is a failure, got: ";
+        print_list(insertion_list6);
+    }
+
+    vector<int> insertion_list7 = {5, 100, 3, 42, 1, 999, 17};
+    insertion_sort(insertion_list7, false);
+    bool insertion_test_7_success = (insertion_list7 == vector<int>{1,3,5,17,42,100,999});
+    if (insertion_test_7_success) {
+        cout << "insertion test 7 (positives only) is a success" << endl;
+    } else {
+        cout << "insertion test 7 (positives only) is a failure, got: ";
+        print_list(insertion_list7);
+    }
+
     // QUICK SORT ------------------------------------------------------------------------------
 
     vector<int> quick_list1 = {482, 917, 103, 650, 274, 839};
@@ -587,6 +773,66 @@ int main() {
     } else {
         cout << "quick test 1 is a failure, got: ";
         print_list(quick_list1);
+    }
+
+    vector<int> quick_list2 = {};
+    quicksort(quick_list2, false);
+    bool quick_test_2_success = (quick_list2 == vector<int>{});
+    if (quick_test_2_success) {
+        cout << "quick test 2 (empty) is a success" << endl;
+    } else {
+        cout << "quick test 2 (empty) is a failure, got: ";
+        print_list(quick_list2);
+    }
+
+    vector<int> quick_list3 = {42};
+    quicksort(quick_list3, false);
+    bool quick_test_3_success = (quick_list3 == vector<int>{42});
+    if (quick_test_3_success) {
+        cout << "quick test 3 (single) is a success" << endl;
+    } else {
+        cout << "quick test 3 (single) is a failure, got: ";
+        print_list(quick_list3);
+    }
+
+    vector<int> quick_list4 = {8, 3, 15, 1, 9, 12, 5, 14, 2, 11, 4, 13, 7, 10, 6};
+    quicksort(quick_list4, false);
+    bool quick_test_4_success = (quick_list4 == vector<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    if (quick_test_4_success) {
+        cout << "quick test 4 (many) is a success" << endl;
+    } else {
+        cout << "quick test 4 (many) is a failure, got: ";
+        print_list(quick_list4);
+    }
+
+    vector<int> quick_list5 = {-8,-3,-15,-1,-9,-12,-5,-14,-2,-11,-4,-13,-7,-10,-6};
+    quicksort(quick_list5, false);
+    bool quick_test_5_success = (quick_list5 == vector<int>{-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1});
+    if (quick_test_5_success) {
+        cout << "quick test 5 (negatives only) is a success" << endl;
+    } else {
+        cout << "quick test 5 (negatives only) is a failure, got: ";
+        print_list(quick_list5);
+    }
+
+    vector<int> quick_list6 = {-5, 3, -19, 0, 17, -3, 9, -11, 13};
+    quicksort(quick_list6, false);
+    bool quick_test_6_success = (quick_list6 == vector<int>{-19,-11,-5,-3,0,3,9,13,17});
+    if (quick_test_6_success) {
+        cout << "quick test 6 (mixed) is a success" << endl;
+    } else {
+        cout << "quick test 6 (mixed) is a failure, got: ";
+        print_list(quick_list6);
+    }
+
+    vector<int> quick_list7 = {5, 100, 3, 42, 1, 999, 17};
+    quicksort(quick_list7, false);
+    bool quick_test_7_success = (quick_list7 == vector<int>{1,3,5,17,42,100,999});
+    if (quick_test_7_success) {
+        cout << "quick test 7 (positives only) is a success" << endl;
+    } else {
+        cout << "quick test 7 (positives only) is a failure, got: ";
+        print_list(quick_list7);
     }
 
     // MERGE SORT ------------------------------------------------------------------------------
@@ -601,6 +847,66 @@ int main() {
         print_list(merge_list1);
     }
 
+    vector<int> merge_list2 = {};
+    merge_sort(merge_list2, false);
+    bool merge_test_2_success = (merge_list2 == vector<int>{});
+    if (merge_test_2_success) {
+        cout << "merge test 2 (empty) is a success" << endl;
+    } else {
+        cout << "merge test 2 (empty) is a failure, got: ";
+        print_list(merge_list2);
+    }
+
+    vector<int> merge_list3 = {42};
+    merge_sort(merge_list3, false);
+    bool merge_test_3_success = (merge_list3 == vector<int>{42});
+    if (merge_test_3_success) {
+        cout << "merge test 3 (single) is a success" << endl;
+    } else {
+        cout << "merge test 3 (single) is a failure, got: ";
+        print_list(merge_list3);
+    }
+
+    vector<int> merge_list4 = {8, 3, 15, 1, 9, 12, 5, 14, 2, 11, 4, 13, 7, 10, 6};
+    merge_sort(merge_list4, false);
+    bool merge_test_4_success = (merge_list4 == vector<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    if (merge_test_4_success) {
+        cout << "merge test 4 (many) is a success" << endl;
+    } else {
+        cout << "merge test 4 (many) is a failure, got: ";
+        print_list(merge_list4);
+    }
+
+    vector<int> merge_list5 = {-8,-3,-15,-1,-9,-12,-5,-14,-2,-11,-4,-13,-7,-10,-6};
+    merge_sort(merge_list5, false);
+    bool merge_test_5_success = (merge_list5 == vector<int>{-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1});
+    if (merge_test_5_success) {
+        cout << "merge test 5 (negatives only) is a success" << endl;
+    } else {
+        cout << "merge test 5 (negatives only) is a failure, got: ";
+        print_list(merge_list5);
+    }
+
+    vector<int> merge_list6 = {-5, 3, -19, 0, 17, -3, 9, -11, 13};
+    merge_sort(merge_list6, false);
+    bool merge_test_6_success = (merge_list6 == vector<int>{-19,-11,-5,-3,0,3,9,13,17});
+    if (merge_test_6_success) {
+        cout << "merge test 6 (mixed) is a success" << endl;
+    } else {
+        cout << "merge test 6 (mixed) is a failure, got: ";
+        print_list(merge_list6);
+    }
+
+    vector<int> merge_list7 = {5, 100, 3, 42, 1, 999, 17};
+    merge_sort(merge_list7, false);
+    bool merge_test_7_success = (merge_list7 == vector<int>{1,3,5,17,42,100,999});
+    if (merge_test_7_success) {
+        cout << "merge test 7 (positives only) is a success" << endl;
+    } else {
+        cout << "merge test 7 (positives only) is a failure, got: ";
+        print_list(merge_list7);
+    }
+
     // HYBRID SORT ------------------------------------------------------------------------------
 
     vector<int> hybrid_list1 = {482, 917, 103, 650, 274, 839};
@@ -611,6 +917,66 @@ int main() {
     } else {
         cout << "hybrid test 1 is a failure, got: ";
         print_list(hybrid_list1);
+    }
+
+    vector<int> hybrid_list2 = {};
+    my_hybrid_sort(hybrid_list2, false);
+    bool hybrid_test_2_success = (hybrid_list2 == vector<int>{});
+    if (hybrid_test_2_success) {
+        cout << "hybrid test 2 (empty) is a success" << endl;
+    } else {
+        cout << "hybrid test 2 (empty) is a failure, got: ";
+        print_list(hybrid_list2);
+    }
+
+    vector<int> hybrid_list3 = {42};
+    my_hybrid_sort(hybrid_list3, false);
+    bool hybrid_test_3_success = (hybrid_list3 == vector<int>{42});
+    if (hybrid_test_3_success) {
+        cout << "hybrid test 3 (single) is a success" << endl;
+    } else {
+        cout << "hybrid test 3 (single) is a failure, got: ";
+        print_list(hybrid_list3);
+    }
+
+    vector<int> hybrid_list4 = {8, 3, 15, 1, 9, 12, 5, 14, 2, 11, 4, 13, 7, 10, 6};
+    my_hybrid_sort(hybrid_list4, false);
+    bool hybrid_test_4_success = (hybrid_list4 == vector<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    if (hybrid_test_4_success) {
+        cout << "hybrid test 4 (many) is a success" << endl;
+    } else {
+        cout << "hybrid test 4 (many) is a failure, got: ";
+        print_list(hybrid_list4);
+    }
+
+    vector<int> hybrid_list5 = {-8,-3,-15,-1,-9,-12,-5,-14,-2,-11,-4,-13,-7,-10,-6};
+    my_hybrid_sort(hybrid_list5, false);
+    bool hybrid_test_5_success = (hybrid_list5 == vector<int>{-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1});
+    if (hybrid_test_5_success) {
+        cout << "hybrid test 5 (negatives only) is a success" << endl;
+    } else {
+        cout << "hybrid test 5 (negatives only) is a failure, got: ";
+        print_list(hybrid_list5);
+    }
+
+    vector<int> hybrid_list6 = {-5, 3, -19, 0, 17, -3, 9, -11, 13};
+    my_hybrid_sort(hybrid_list6, false);
+    bool hybrid_test_6_success = (hybrid_list6 == vector<int>{-19,-11,-5,-3,0,3,9,13,17});
+    if (hybrid_test_6_success) {
+        cout << "hybrid test 6 (mixed) is a success" << endl;
+    } else {
+        cout << "hybrid test 6 (mixed) is a failure, got: ";
+        print_list(hybrid_list6);
+    }
+
+    vector<int> hybrid_list7 = {5, 100, 3, 42, 1, 999, 17};
+    my_hybrid_sort(hybrid_list7, false);
+    bool hybrid_test_7_success = (hybrid_list7 == vector<int>{1,3,5,17,42,100,999});
+    if (hybrid_test_7_success) {
+        cout << "hybrid test 7 (positives only) is a success" << endl;
+    } else {
+        cout << "hybrid test 7 (positives only) is a failure, got: ";
+        print_list(hybrid_list7);
     }
 
     // BINARY RADIX SORT ------------------------------------------------------------------------------
@@ -636,6 +1002,67 @@ int main() {
         cout << "radix test 1 is a failure, got: ";
         print_list(radix_list1);
     }
+
+    vector<int> radix_list2 = {};
+    radix_sort(radix_list2, 10, false);
+    bool radix_test_2_success = (radix_list2 == vector<int>{});
+    if (radix_test_2_success) {
+        cout << "radix test 2 (empty) is a success" << endl;
+    } else {
+        cout << "radix test 2 (empty) is a failure, got: ";
+        print_list(radix_list2);
+    }
+
+    vector<int> radix_list3 = {42};
+    radix_sort(radix_list3, 10, false);
+    bool radix_test_3_success = (radix_list3 == vector<int>{42});
+    if (radix_test_3_success) {
+        cout << "radix test 3 (single) is a success" << endl;
+    } else {
+        cout << "radix test 3 (single) is a failure, got: ";
+        print_list(radix_list3);
+    }
+
+    vector<int> radix_list4 = {8, 3, 15, 1, 9, 12, 5, 14, 2, 11, 4, 13, 7, 10, 6};
+    radix_sort(radix_list4, 10, false);
+    bool radix_test_4_success = (radix_list4 == vector<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    if (radix_test_4_success) {
+        cout << "radix test 4 (many) is a success" << endl;
+    } else {
+        cout << "radix test 4 (many) is a failure, got: ";
+        print_list(radix_list4);
+    }
+
+    vector<int> radix_list5 = {-8,-3,-15,-1,-9,-12,-5,-14,-2,-11,-4,-13,-7,-10,-6};
+    radix_sort(radix_list5, 10, false);
+    bool radix_test_5_success = (radix_list5 == vector<int>{-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1});
+    if (radix_test_5_success) {
+        cout << "radix test 5 (negatives only) is a success" << endl;
+    } else {
+        cout << "radix test 5 (negatives only) is a failure, got: ";
+        print_list(radix_list5);
+    }
+
+    vector<int> radix_list6 = {-5, 3, -19, 0, 17, -3, 9, -11, 13};
+    radix_sort(radix_list6, 10, false);
+    bool radix_test_6_success = (radix_list6 == vector<int>{-19,-11,-5,-3,0,3,9,13,17});
+    if (radix_test_6_success) {
+        cout << "radix test 6 (mixed) is a success" << endl;
+    } else {
+        cout << "radix test 6 (mixed) is a failure, got: ";
+        print_list(radix_list6);
+    }
+
+    vector<int> radix_list7 = {5, 100, 3, 42, 1, 999, 17};
+    radix_sort(radix_list7, 10, false);
+    bool radix_test_7_success = (radix_list7 == vector<int>{1,3,5,17,42,100,999});
+    if (radix_test_7_success) {
+        cout << "radix test 7 (positives only) is a success" << endl;
+    } else {
+        cout << "radix test 7 (positives only) is a failure, got: ";
+        print_list(radix_list7);
+    }
+
 
     /**** END STUDENT CODE ****/
 

@@ -356,7 +356,63 @@ void merge_sort(vector<T> &list, bool decending) {
  */
 template<typename T>
 void my_hybrid_sort(vector<T> &list, bool descending) {
-    // Your code here!
+    if (list.size() <= 1) {
+        return;
+    }
+    else if (list.size() < 128) { // insertion sort
+
+
+
+        for (int i = 1; i < list.size(); i++) {
+            int pos = i;
+            while ((pos - 1 >= 0) && (
+                ((list[pos-1] > list[pos]) && descending == false) ||
+                ((list[pos-1] < list[pos]) && descending == true) ) 
+            ) {
+                // need a swap
+                T temp = list[pos];
+                list[pos] = list[pos - 1];
+                list[pos - 1] = temp;
+
+                pos -= 1;
+            }
+        }
+
+
+
+    }
+    else { // quick sort
+
+
+
+        int pivot = get_rand_index(list.size());
+
+        vector<T> smaller;
+        vector<T> greater;
+        for (int i = 0; i < list.size(); i++) {
+            if (list[i] < list[pivot]) {
+                smaller.push_back(list[i]);
+            }
+            else if (i != pivot) {
+                greater.push_back(list[i]);
+            }
+        }
+        my_hybrid_sort(smaller, descending);
+        my_hybrid_sort(greater, descending);
+        if (descending) {
+            greater.push_back(list[pivot]);
+            greater.insert(greater.end(), smaller.begin(), smaller.end());
+            list = greater;
+        }
+        else {
+            smaller.push_back(list[pivot]);
+            smaller.insert(smaller.end(), greater.begin(), greater.end());
+            list = smaller;
+        }
+
+
+
+    }
 }
 
 

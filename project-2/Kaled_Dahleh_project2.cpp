@@ -186,6 +186,42 @@ vector<unsigned int> birthday_attack_2(function<unsigned short(unsigned int)> ha
     // signatures match the `test_hash` function signature.
     
     // Your code here!
+
+    unsigned int tort = hash_function(0);
+    unsigned int hare = hash_function(hash_function(0));
+
+    // Explanation that helped me understand from claude
+
+    // Picture a driveway leading onto a circular track. 
+    // The driveway is 2 steps long (0 → 3 → 7). 
+    // The track is 3 steps around (7 → 5 → 2 → back to 7). 
+    // Spot 7 is where the driveway joins the track.
+
+    // a slow walker and a fast walker start at the street. 
+    // Both end up going around the track, 
+    // and the fast one eventually catches the slow one. 
+    // Where they meet (5) happens to be exactly as far 
+    // from the joining spot as the street is (2 steps each). 
+    // That's a math guarantee, not luck.
+
+    // This outputs a value inside the cycle that is exactly 
+    // as many hash steps from the collision point as the starting value (0) is.
+    while (tort != hare) {
+        tort = hash_function(tort); // just one step
+        hare = hash_function(hash_function(hare)); // moves two steps at once
+    }
+
+    unsigned int p1 = 0;
+    unsigned int p2 = tort; // this point is the same distance to the collision as the start (0)
+
+    // since p1 and p2 are equal distance to the target (collision), move each one until they both hashes to the target
+    while (hash_function(p1) != hash_function(p2)) {
+        p1 = hash_function(p1);
+        p2 = hash_function(p2);
+    }
+
+    return {p1, p2};
+
 }
 
 

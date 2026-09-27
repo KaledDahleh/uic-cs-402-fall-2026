@@ -98,15 +98,41 @@ unsigned short test_hash(unsigned int input) {
     return a*(input << 2) + b;
 }
 
+#include <unordered_map>
 // Do not modify this function signature. 
 vector<unsigned int> birthday_attack_1(function<unsigned short(unsigned int)> hash_function) {
     // Here, hash_function is an actual function. To test this function with
     // the provided `test_hash`, you can call your function in main as:
-    //     vector<long> out = birthday_attack_1(test_hash);
+    // vector<long> out = birthday_attack_1(test_hash);
     // Note you can implement your own test hash functions so long as their 
     // signatures match the `test_hash` function signature.
     
     // Your code here!
+
+    unordered_map<unsigned int, unsigned int> seen_hashes;
+
+    for(int i = 0; i < 5; i++) {
+
+        seen_hashes.clear();
+
+        for (int _ = 0; _ < 350; _++) {
+            unsigned int rand_num = sample_int();
+
+            unsigned int hash = hash_function(rand_num);
+
+            if (seen_hashes.count(hash) and seen_hashes[hash] != rand_num) {
+                return {seen_hashes[hash], rand_num};
+            }
+            
+            else {
+                seen_hashes[hash] = rand_num;
+            }
+        }
+
+    }
+
+    return {};
+
 }
 
 

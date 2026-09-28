@@ -444,6 +444,27 @@ int merkle_verify_position(
     function<string(string)> hash_function, 
     const unsigned int i
 ) {
+    string curr_hash = "";
+    bool first = true;
+    for (auto[direction, hash] : proof) {
+        if (first) {
+            first = false;
+            curr_hash = hash_function(hash + to_string(i));
+        }
+        else {
+            if (direction == "R") {
+                curr_hash = hash_function(curr_hash + hash);
+            }
+            else { // left
+                curr_hash = hash_function(hash + curr_hash);
+            }
+        }
+    }
+
+    if (curr_hash == root) {
+        return 0;
+    }
+    return 1;
 }
 
 

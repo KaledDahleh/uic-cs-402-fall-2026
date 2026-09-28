@@ -388,12 +388,57 @@ list=[ A, B,  C, D, E, F,   G, H ]
  *          size n, where n is NOT a power of 2.
  */
 
+#include <cmath>
 vector<pair<string,string>> merkle_open_position(
     const vector<string>& list, 
     function<string(string)> hash_function, 
     const unsigned int i
 ) {
-    // todo
+    //   { 
+    //   {"L", "c"},
+    //   {"R", "f451...88b6"}
+    //   }
+
+    // if odd, it's a right child
+
+    vector<pair<string,string>> proof = {};
+
+    // ------------- first e.g. {"L", "c"} ----------------------------------------------------
+    if (i % 2 == 0) { // first is even
+        proof.push_back({"L", list[i]});
+    }
+    else { // first is odd
+        proof.push_back({"R", list[i]});
+    }
+    // ----------------------------------------------------------------------------------------
+
+    // everything after first
+    for (int level = 0; level < log2(list.size()); level++) {
+
+            int range_size = pow(2, level);
+            int block_num = i/(range_size); // index of the node above i at this level
+
+            int neighbor_block; // paired block / sibling node
+            if (block_num % 2 == 0) {
+                neighbor_block = block_num + 1;
+            }
+            else {
+                neighbor_block = block_num - 1;
+            }
+            int first = neighbor_block * range_size; // neighbors first leaf
+            int last = first + range_size - 1; // neighbors last leaf
+
+
+            string next_dir = "L";
+            if (block_num % 2 == 0) {
+                next_dir = "R";
+            }
+
+            string neighbor_hash = merkle_commit_HELPER(first, last, list, hash_function);
+            proof.push_back({next_dir, neighbor_hash});
+        }
+
+    return proof;
 
 }
 

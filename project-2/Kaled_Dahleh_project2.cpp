@@ -266,8 +266,35 @@ vector<unsigned int> birthday_attack_2(function<unsigned short(unsigned int)> ha
  *          size n, where n is NOT a power of 2.
  */
 
+string merkle_commit_HELPER(int left, int right, const vector<string>& list, function<string(string)> hash_function) {
+
+    if (left == right) {
+        return hash_function(list[left] + to_string(left));
+    }
+
+    else {
+        // <1,2,3,4,5,6>
+        // left = 0, right = 5
+        // mid = 2 = (5+0)/2
+
+        int midpoint = ((left+right) / 2);
+
+        string left_ret = merkle_commit_HELPER(left, midpoint, list, hash_function);
+        string right_ret = merkle_commit_HELPER(midpoint + 1, right, list, hash_function);
+
+        return hash_function(left_ret + right_ret);
+    }
+}
 
 string merkle_commit(const vector<string>& list, function<string(string)> hash_function) {
+
+    if (list.size() == 0) {
+        return "";
+    }
+    else {
+        return merkle_commit_HELPER(0, list.size() - 1, list, hash_function);
+    }
+
 }
 
  /* 2. The Positional Open Algorithm (20 points)

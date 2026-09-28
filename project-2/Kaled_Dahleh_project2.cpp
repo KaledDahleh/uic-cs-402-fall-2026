@@ -393,7 +393,8 @@ vector<pair<string,string>> merkle_open_position(
     function<string(string)> hash_function, 
     const unsigned int i
 ) {
-    
+    // todo
+
 }
 
 
@@ -466,6 +467,11 @@ int merkle_verify_position(
  */
 
 int merkle_verify_full(const string root, const vector<std::string>& list, function<string(string)> hash_function) {
+    if (root == merkle_commit(list, hash_function)) {
+        return 0;
+    }
+
+    return 1;
 }
 
 

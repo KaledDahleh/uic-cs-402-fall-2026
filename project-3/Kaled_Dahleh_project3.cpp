@@ -249,8 +249,47 @@ vector<int> weird_traversal(TreeNode* root) {
  *                5
  */
 
+
+/*cd ~/Desktop/School_Work/CS/CS_402_Algo/uic-cs-402-fall-2026/project-3/autograder && cp ../Kaled_Dahleh_project3.cpp . && ./startup/docker_run_grader.sh*/
 // Do not modify this fuction signature
 TreeNode* bits_to_tree(const vector<bool>& bits) {
+    TreeNode* root = new TreeNode{0, nullptr, nullptr};
+    TreeNode* curr = root;
+    vector<TreeNode*> stack;
+    int curr_number = 1;
+    for (bool entry : bits) {
+
+        if (entry == 0) {
+            if (stack.empty())
+                return nullptr;
+            else {
+                curr = stack.back();
+                stack.pop_back();
+            }
+
+        } else { // entry is 1
+            TreeNode* child = curr->first_child;
+            TreeNode* prev = nullptr;
+            while (child) {
+                prev = child;
+                child = child->next_sibling;
+            }
+
+            TreeNode* node = new TreeNode{curr_number, nullptr, nullptr};
+            curr_number++;
+            if (prev)
+                prev->next_sibling = node;
+            else
+                curr->first_child = node;
+            stack.push_back(curr);
+            curr = node;
+        }
+    }
+
+    if (!stack.empty())
+        return nullptr;
+
+    return root;
 }
 
 

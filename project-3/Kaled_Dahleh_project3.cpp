@@ -395,10 +395,55 @@ TreeNode* bits_to_tree(const vector<bool>& bits) {
 *
 */
 
+/*cd ~/Desktop/School_Work/CS/CS_402_Algo/uic-cs-402-fall-2026/project-3 && g++ -std=c++20 test_q3.cpp -o test_q3 && ./test_q3*/
 // Do not modify this function signature
 ParseTreeNode* build_parse_tree(const string& expr) {
-}
+    ParseTreeNode* cur = nullptr;  // tree built so far at this level
+    char op = 0;                   // last ^ or | seen
+    int nots = 0;                  // ~'s waiting for their operand
+    vector<ParseTreeNode*> cur_stack;   // saved cur, op, nots
+    vector<char> op_stack;              // for each open '('
+    vector<int> nots_stack;
 
+    for (char c : expr) {
+        if (c == AND || c == OR) {
+            op = c;
+        } else if (c == NOT) {
+            nots++;
+        } else if (c == '(') {
+            cur_stack.push_back(cur);
+            op_stack.push_back(op);
+            nots_stack.push_back(nots);
+            cur = nullptr;
+            op = 0;
+            nots = 0;
+        } else {
+            ParseTreeNode* node;
+            if (c == ')') {
+                node = cur;
+                cur = cur_stack.back();
+                op = op_stack.back();
+                nots = nots_stack.back();
+                cur_stack.pop_back();
+                op_stack.pop_back();
+                nots_stack.pop_back();
+            } else {
+                node = new ParseTreeNode{c, nullptr, nullptr};
+            }
+
+            for (int i = 0; i < nots; i++)
+                node = new ParseTreeNode{NOT, node, nullptr};
+            nots = 0;
+
+            if (cur == nullptr)
+                cur = node;
+            else
+                cur = new ParseTreeNode{op, cur, node};
+        }
+    }
+
+    return cur;
+}
 
 int main() {
 

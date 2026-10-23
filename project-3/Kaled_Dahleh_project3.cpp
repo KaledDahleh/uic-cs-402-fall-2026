@@ -2,16 +2,16 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <queue>
 
 // be sure to change FIRSTNAME and LASTNAME with your own first and last name
-#include "Firstname_Lastname_project3.h"
+#include "Kaled_Dahleh_project3.h"
 
 using namespace std;
 
 const string who_am_i() {
-    return "Firstname_Lastname";
+    return "Kaled_Dahleh";
 }
-
 
 /****************
  * INSTRUCTIONS *
@@ -136,8 +136,52 @@ const string who_am_i() {
  */
 
 // Do not modify this function signature.
+/*
+cd ~/Desktop/School_Work/CS/CS_402_Algo/uic-cs-402-fall-2026/project-3/autograder
+cp ../Kaled_Dahleh_project3.cpp . && ./startup/docker_run_grader.sh
+*/
+
 vector<int> weird_traversal(TreeNode* root) {
-    // Your code here!
+    if (!root)
+        return {};
+
+    queue<TreeNode*> q;
+    q.push(root);
+
+    vector<vector<int>> stack;
+    vector<int> res;
+    int depth = 0;
+
+    while (!q.empty()) {
+        vector<int> level;
+        int n = q.size();
+        for (int i = 0; i < n; i++) {
+            TreeNode* node = q.front();
+            q.pop();
+            level.push_back(node->id);
+            TreeNode* child = node->first_child;
+            while (child) {
+                q.push(child);
+                child = child->next_sibling;
+            }
+        }
+        if (depth % 2 == 0) {
+            for (int x : level)
+                res.push_back(x);
+        } else {
+            stack.push_back(level);
+        }
+        depth++;
+    }
+
+    while (!stack.empty()) {
+        vector<int> level = stack.back();
+        stack.pop_back();
+        for (int i = level.size() - 1; i >= 0; i--)
+            res.push_back(level[i]);
+    }
+
+    return res;
 }
 
 

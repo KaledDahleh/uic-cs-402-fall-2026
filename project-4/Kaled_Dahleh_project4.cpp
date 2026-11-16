@@ -6,6 +6,8 @@
 #include <unordered_set>
 #include <algorithm>
 #include <climits>
+#include <queue>
+#include <cmath>
 
 using namespace std;
 
@@ -217,7 +219,47 @@ vector<Node> dijkstras_algorithm(int n, vector<Edge> edges, int source) {
     // Note: see the LeetCode from in-class for the problem "Cheapest Flights
     // K stops" to see how you can create a priority_queue with the Node struct.
     
+    if (n == 0) {
+        return {};
+    }
+
+    unordered_map<int, vector<pair<int, int>>> adjList;
+    for (auto e : edges) {
+        adjList[e.from].push_back({e.weight, e.to});
+    }
+
+    vector<Node> costs;
+    for (int i = 0; i < n; i++) {
+        costs.push_back({i, INT_MAX, -1}); // {id, path_cost, pred}
+    }
+    costs[source].path_cost = 0;
+
+    // min heap (cost, node)
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> heap;
+
+    heap.push({0, source});
+
+    while (!heap.empty()) {
+        auto [cost, target] = heap.top();
+        heap.pop();
+
+        if (cost > costs[target].path_cost) {
+            continue;
+        }
+
+        for (auto [jump_cost, neighbor] : adjList[target]) {
+            int new_cost = cost + jump_cost;
+            if (new_cost < costs[neighbor].path_cost) {
+                costs[neighbor].path_cost = new_cost;
+                costs[neighbor].pred = target;
+                heap.push({new_cost, neighbor});
+            }
+        }
+    }
+
+    return costs;
 }
+
 
 
 /* A-star Algorithm
@@ -317,6 +359,13 @@ vector<Node> dijkstras_algorithm(int n, vector<Edge> edges, int source) {
 // You must implement this function.
 double heuristic_cost(GridNode start, GridNode dest) {
     // Your code here!
+    double dx = abs(dest.x - start.x); // steps apart horizontally
+    double dy = abs(dest.y - start.y); // steps apart vertically
+
+    double diagonal = min(dx, dy); // diagonal steps (move x and y at once)
+    double strt = max(dx, dy) - diagonal; // leftover straight steps
+
+    return 1.5 * diagonal + 1.0 * strt;
 }
 
 // To test your algorithm with the function "heruistic_cost" above,
@@ -330,10 +379,101 @@ vector<GridNode> a_star_algorithm(
     function<double(GridNode,GridNode)> h
 ) 
 {
-    // Your code here!
-    // Be sure to use "h" from the inputs in your implementation; do not
-    // directly use "heruistic_cost" above!
+    // empty grid
 
+    if (m == 0) {
+        return {};
+    }
+
+    if (n == 0) {
+        return {};
+    }
+
+    unordered_map<int, vector<GridEdge>> adjList;
+    for (auto e : edges) {
+        int from_id = e.from_x + m * e.from_y;
+        adjList[from_id].push_back(e);
+    }
+
+    vector<GridNode> costs;
+    for (int i = 0; i < m * n; i++) {
+        int x = i % m;
+        int y = i / m;
+
+        GridNode node;
+        node.x = x;
+        node.y = y;
+        node.path_cost = INFINITY;
+        node.pred_x = -1;
+        node.pred_y = -1;
+        costs.push_back(node);
+    }
+
+    // (x, y) to id
+    int source_id = source.x + m * source.y;
+    int target_id = target.x + m * target.y;
+    costs[source_id].path_cost = 0;
+
+    // mn heap of (estimate, id)
+    priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> heap;
+    heap.push({h(source, target), source_id});
+    unordered_set<int> visited;
+
+    while (!heap.empty()) {
+        int curr = heap.top().second;
+        heap.pop();
+
+        // skip if handled
+        if (visited.count(curr)) {
+            continue;
+        }
+        visited.insert(curr);
+
+        // reached target
+        if (curr == target_id) {
+            break;
+        }
+
+        for (auto e : adjList[curr]) {
+            int neighbor = e.to_x + m * e.to_y;
+
+            // straight 1, diagonal 1.5
+            double jump_cost = 1.0;
+            if (e.from_x != e.to_x && e.from_y != e.to_y) {
+                jump_cost = 1.5;
+            }
+
+            // found cheaper path
+            double new_cost = costs[curr].path_cost + jump_cost;
+            if (new_cost < costs[neighbor].path_cost) {
+                costs[neighbor].path_cost = new_cost;
+                costs[neighbor].pred_x = e.from_x;
+                costs[neighbor].pred_y = e.from_y;
+
+                // real cost + guess
+                double estimate = new_cost + h(costs[neighbor], target);
+                heap.push({estimate, neighbor});
+            }
+        }
+    }
+
+    // can't reach
+    if (costs[target_id].path_cost == INFINITY) {
+        return {};
+    }
+
+    // walk back
+    vector<GridNode> path;
+    int curr = target_id;
+    while (curr != source_id) {
+        path.push_back(costs[curr]);
+        int pred_id = costs[curr].pred_x + m * costs[curr].pred_y;
+        curr = pred_id;
+    }
+    path.push_back(costs[source_id]);
+
+    reverse(path.begin(), path.end());
+    return path;
 }
 
 int main() {

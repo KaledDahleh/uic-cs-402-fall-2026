@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <algorithm>
+#include <climits>
 
 using namespace std;
 
@@ -146,6 +147,40 @@ vector<int> topological_sort(int n, vector<Edge> edges) {
  *
  */
 vector<int> dag_single_source(int n, vector<Edge> edges, int source) {
+
+    vector<int> cheapest;
+    for (int i = 0; i < n; i++) {
+        cheapest.push_back(INT_MAX);
+    }
+
+    if (n == 0) {
+        return cheapest;
+    }
+
+    unordered_map<int, vector<Edge>> adjList;
+    for (auto e : edges) {
+        adjList[e.from].push_back(e);
+    }
+
+
+    vector<int> order = topological_sort(n, edges);
+    cheapest[source] = 0;
+
+    for (int node : order) {
+        // can't reach from source
+        if (cheapest[node] == INT_MAX) {
+            continue;
+        }
+
+        for (auto e : adjList[node]) {
+            int newDist = cheapest[node] + e.weight;
+            if (newDist < cheapest[e.to]) {
+                cheapest[e.to] = newDist;
+            }
+        }
+    }
+
+    return cheapest;
 }
 
 
